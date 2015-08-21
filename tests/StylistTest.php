@@ -178,6 +178,41 @@
             $this->assertEquals([$test_stylist2], $result);
         }
 
+        function test_delete2()
+        {
+            $name = "Jaina";
+            $phone = "456-323-9811";
+            $email = "jproudmoore@gmail.net";
+            $test_stylist = new Stylist($name, $phone, $email);
+            $test_stylist->save();
+
+            $name2 = "Rick Sanchez";
+            $phone2 = "971-301-2344";
+            $email2 = "rickandmorty100years@rickandmortyforever.forever";
+            $test_stylist2 = new Stylist($name2, $phone2, $email2);
+            $test_stylist2->save();
+
+            $name3 = "Rick Sanchez";
+            $phone3 = "971-301-2344";
+            $email3 = "rickandmorty100years@rickandmortyforever.forever";
+            $stylist_id = $test_stylist->getId();
+            $test_client = new Client($name3, $phone3, $email3, $stylist_id);
+            $test_client->save();
+
+            $name4 = "Morty Smith";
+            $phone4 = "029-423-0918";
+            $email4 = "ohjeez@rick.com";
+            $stylist_id = $test_stylist->getId();
+            $test_client2 = new Client($name4, $phone4, $email4, $stylist_id);
+            $test_client2->save();
+
+            $test_stylist->delete();
+            $clients = Client::getAll();
+            $result = array($clients[0]->getStylistId(),$clients[1]->getStylistId());
+
+            $this->assertEquals([0,0], $result);
+        }
+
         function test_getClients()
         {
             $name = "Jaina";
@@ -197,12 +232,12 @@
             $phone3 = "029-423-0918";
             $email3 = "ohjeez@rick.com";
             $stylist_id = $test_stylist->getId();
-            $test_client2 = new Client($name2, $phone2, $email2, $stylist_id);
+            $test_client2 = new Client($name3, $phone3, $email3, $stylist_id);
             $test_client2->save();
 
             $result = $test_stylist->getClients();
 
-            $this->assertEquals([$test_client, $test_client2], $result);
+            $this->assertEquals([$test_client2, $test_client], $result);
         }
     }
 ?>

@@ -82,7 +82,9 @@
         }
 
         function delete()
+        //Idea: have this function set all clients' stylist_id under the stylist this function is called on to 0. Then have them grouped under "unassigned clients" on the webpage.
         {
+            $GLOBALS['DB']->exec("UPDATE clients SET stylist_id = 0 WHERE stylist_id={$this->getId()};");
             $GLOBALS['DB']->exec("DELETE FROM stylists WHERE id={$this->getId()};");
         }
 
