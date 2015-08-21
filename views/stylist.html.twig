@@ -33,6 +33,15 @@
                             <p>{{ client.getEmail }}</p>
                         {% endif %}
                     {% endfor %}
+                    {% for client in clients %}
+                        {% if client.getStylistId == 0 %}
+                            <h4>You have unassigned clients:</h4>
+                            <p><strong>{{ client.getName }}
+                                <a href="/stylists/{{ stylist.getId }}/assign"><i class="fa fa-plus"></i> Assign To Me</a></strong></p>
+                            <p>{{ client.getPhone }}</p>
+                            <p>{{ client.getEmail }}</p>
+                        {% endif %}
+                    {% endfor %}
                 {% else %}
                     <h2>There are no clients for {{ stylist.getName }} yet</h2>
                 {% endif %}

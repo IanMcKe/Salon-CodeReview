@@ -75,6 +75,23 @@
         return $app['twig']->render('stylist.html.twig', array('clients' => Client::getAll(), 'stylist' => $stylist));
     });
 
+
+    //Started to try and make a prototype "Assign to me" feature.  Got lazy 
+
+    // $app->get("/stylist/{id}/assign", function($id) use ($app){
+    //     $stylist = Stylist::find($id);
+    //     $unassigned_array = $stylist->getUnassigned();
+    //     $unassigned_client = $unassigned_array[0]
+    //     return $app['twig']->render('stylist_assign.html.twig', array('client' => $unassigned_client, 'stylist' => $stylist));
+    // });
+    //
+    // $app->patch("/stylist/{id}", function($id) use ($app){
+    //     $stylist = Stylist::find($id);
+    //     $unassigned_array = $stylist->getUnassigned();
+    //     $unassigned_array[0]->updateStylistId($stylist->getId());
+    //     return $app['twig']->render('stylist.html.twig', array('clients' => Client::getAll(), 'stylist' => $stylist));
+    // });
+
     $app->delete("/clients/{id}", function($id) use ($app){
         $client = Client::find($id);
         $stylist = Stylist::find($client->getStylistId());

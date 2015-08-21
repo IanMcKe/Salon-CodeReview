@@ -100,7 +100,9 @@
         function delete()
         //Idea: have this function set all clients' stylist_id under the stylist this function is called on to 0. Then have them grouped under "unassigned clients" on the webpage.
         {
-            $GLOBALS['DB']->exec("UPDATE clients SET stylist_id = 0 WHERE stylist_id={$this->getId()};");
+            //the line below is what would be key to have an "unassigned" state for a client the SQL works but I didn't feel like hashing out the app.php or twig
+            //$GLOBALS['DB']->exec("UPDATE clients SET stylist_id = 0 WHERE stylist_id={$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM clients WHERE stylist_id={$this->getId()};");
             $GLOBALS['DB']->exec("DELETE FROM stylists WHERE id={$this->getId()};");
         }
 
