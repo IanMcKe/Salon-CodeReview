@@ -239,5 +239,32 @@
 
             $this->assertEquals([$test_client2, $test_client], $result);
         }
+
+        function test_getUnassigned()
+        {
+            $name = "Jaina";
+            $phone = "456-323-9811";
+            $email = "jproudmoore@gmail.net";
+            $test_stylist = new Stylist($name, $phone, $email);
+            $test_stylist->save();
+
+            $name2 = "Rick Sanchez";
+            $phone2 = "971-301-2344";
+            $email2 = "rickandmorty100years@rickandmortyforever.forever";
+            $stylist_id = 0;
+            $test_client = new Client($name2, $phone2, $email2, $stylist_id);
+            $test_client->save();
+
+            $name3 = "Morty Smith";
+            $phone3 = "029-423-0918";
+            $email3 = "ohjeez@rick.com";
+            $stylist_id = $test_stylist->getId();
+            $test_client2 = new Client($name3, $phone3, $email3, $stylist_id);
+            $test_client2->save();
+
+            $result = $test_stylist->getUnassigned();
+
+            $this->assertEquals([$test_client], $result);
+        }
     }
 ?>

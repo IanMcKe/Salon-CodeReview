@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>V-Chrome</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><i class="fa fa-viacoin"></i>-Chrome</a>
+                </div>
+            </div>
+        </nav>
+        <div class=big-background>
+            <div class="jumbotron">
+                <div class="container-fluid">
+                    <h2>{{ stylist.getName }}</h2>
+                    <ul class="list-unstyled">
+                        <li>{{ stylist.getPhone }}</li>
+                        <li>{{ stylist.getEmail }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container-fluid">
+                {% if clients is not empty %}
+                    <h2>Here are {{ stylist.getName }}'s clients:</h2>
+                    {% for client in clients %}
+                        {% if client.getStylistId == stylist.getId %}
+                            <p><strong>{{ client.getName }} <a href="/clients/{{ client.getId }}/edit"><i class="fa fa-pencil-square-o"></i></a></strong></p>
+                            <p>{{ client.getPhone }}</p>
+                            <p>{{ client.getEmail }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <h2>There are no clients for {{ stylist.getName }} yet</h2>
+                {% endif %}
+
+                <form action="/clients" method="post" class="form-inline">
+                    <input id="stylist_id" type="hidden" name="stylist_id" value="{{ stylist.getId }}">
+                    <div class=form-group>
+                        <label for="name" class="sr-only">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Name">
+                    </div>
+                    <div class=form-group>
+                        <label for="phone" class="sr-only">Stylist Phone:</label>
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone">
+                    </div>
+                    <div class=form-group>
+                        <label for="email" class="sr-only">Stylist Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+                        <button type="submit" class= "btn btn-default"><i class="fa fa-plus"></i> Add Client</button>
+                </form>
+                <form action="/stylists/{{ stylist.getId }}/edit" class="form-inline">
+                    <div class=form-group>
+                    <button type="submit" class="btn btn-default">Edit Stylist <i class="fa fa-pencil-square-o"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

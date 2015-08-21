@@ -11,8 +11,12 @@
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
-    use Symfony\Component\HttpFoundationRequest;
+    use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
+
+    $app->register(new Silex\Provider\TwigServiceProvider(), array(
+        'twig.path' => __DIR__."/../views"
+    ));
 
     $app->get("/", function() use ($app){
         return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
@@ -26,7 +30,7 @@
 
     $app->get("/stylists/{id}", function($id) use ($app){
         $stylist = Stylist::find($id);
-        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients()));
+        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients(), 'unassigned' => $stylist->getUnassigned()));
     });
 
     $app->get("/stylists/{id}/edit", function($id) use ($app){
@@ -37,13 +41,45 @@
     $app->patch("/stylists/{id}", function($id) use ($app){
         $stylist = Stylist::find($id);
         $stylist->update($_POST['name'], $_POST['phone'], $_POST['email']);
-        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients()));
+        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients(), 'unassigned' => $stylist->getUnassigned()));
     });
 
     $app->delete("/stylists/{id}", function($id) use($app){
         $stylist = Stylist::find($id);
         $stylist->delete();
-        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients()));
+        return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
+    });
+
+    $app->post("/clients", function() use ($app){
+        $client = new Client($_POST['name'], $_POST['phone'], $_POST['email'], $_POST['stylist_id']);
+        $client->save();
+        $stylist = Stylist::find($client->getStylistId());
+        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => Client::getAll()));
+    });
+
+    // $app->get("/clients/{id}", function($id) use ($app){
+    //     $client = Client::find($id);
+    //     return $app['twig']->render('client.html.twig', array('client' => $client));
+    // });
+
+    $app->get("/clients/{id}/edit", function($id) use ($app){
+        $client = Client::find($id);
+        $stylist = Stylist::find($client->getStylistId());
+        return $app['twig']->render('client_edit.html.twig', array('client' => $client, 'stylist' => $stylist));
+    });
+
+    $app->patch("/clients/{id}", function($id) use ($app){
+        $client = Client::find($id);
+        $stylist = Stylist::find($client->getStylistId());
+        $client->update($_POST['name'], $_POST['phone'], $_POST['email'], $_POST['stylist_id']);
+        return $app['twig']->render('stylist.html.twig', array('clients' => Client::getAll(), 'stylist' => $stylist));
+    });
+
+    $app->delete("/clients/{id}", function($id) use ($app){
+        $client = Client::find($id);
+        $stylist = Stylist::find($client->getStylistId());
+        $client->delete();
+        return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'stylists' => Stylist::getAll(), 'client' => $client, 'clients' => $stylist->getClients()));
     });
 
     return $app;

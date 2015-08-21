@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>V-Chrome</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <div class="big-background">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/"><i class="fa fa-viacoin"></i>-Chrome</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="jumbotron">
+                <div class="container-fluid">
+                    <h2>Stylists:</h2>
+                    {% if stylists is not empty %}
+                        <p>Here are the Stylists to choose from:</p>
+                        <ul>
+                            {% for stylist in stylists %}
+                                <form action="/stylists/{{ stylist.getId }}">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-scissors"></i> {{ stylist.getName }}</button>
+                                </form>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>There are no Stylists entered</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container-fluid">
+                <form action="/stylists" method="post" class="form-inline">
+                    <div class=form-group>
+                        <label for="name" class="sr-only">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Name">
+                    </div>
+                    <div class=form-group>
+                        <label for="phone" class="sr-only">Stylist Phone:</label>
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone">
+                    </div>
+                    <div class=form-group>
+                        <label for="email" class="sr-only">Stylist Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+                        <button type="submit" class= "btn btn-default"><i class="fa fa-plus"></i> Add Stylist</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
