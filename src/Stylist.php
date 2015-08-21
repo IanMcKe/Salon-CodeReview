@@ -65,21 +65,21 @@
             $this->updateEmail($new_email);
         }
 
-        // function getClients()
-        // {
-        //     $clients = array();
-        //     $returned_clients = $GLOBALS['DB']->query("SELECT * FROM clients ORDER BY name;");
-        //     foreach($returned_clients as $client){
-        //         $name = $client['name'];
-        //         $phone = $client['phone'];
-        //         $email = $client['email'];
-        //         $stylist_id = $client['stylist_id'];
-        //         $id = $client['id'];
-        //         $new_client = new Client($name, $phone, $email, $stylist_id, $id);
-        //         array_push($clients, $new_client);
-        //     }
-        //     return $clients;
-        // }
+        function getClients()
+        {
+            $clients = array();
+            $returned_clients = $GLOBALS['DB']->query("SELECT * FROM clients ORDER BY name;");
+            foreach($returned_clients as $client){
+                $name = $client['name'];
+                $phone = $client['phone'];
+                $email = $client['email'];
+                $stylist_id = $client['stylist_id'];
+                $id = $client['id'];
+                $new_client = new Client($name, $phone, $email, $stylist_id, $id);
+                array_push($clients, $new_client);
+            }
+            return $clients;
+        }
 
         function delete()
         {

@@ -5,7 +5,7 @@
     */
 
     require_once "src/Stylist.php";
-    //require_once "src/Client.php";
+    require_once "src/Client.php";
 
     $server = 'mysql:host=localhost;dbname=hair_salon_test';
     $username = 'root';
@@ -17,7 +17,7 @@
         protected function tearDown()
         {
             Stylist::deleteAll();
-            // Client::deleteAll();
+            Client::deleteAll();
         }
 
         function test_getName()
@@ -176,7 +176,33 @@
             $result = Stylist::getAll();
 
             $this->assertEquals([$test_stylist2], $result);
+        }
 
+        function test_getClients()
+        {
+            $name = "Jaina";
+            $phone = "456-323-9811";
+            $email = "jproudmoore@gmail.net";
+            $test_stylist = new Stylist($name, $phone, $email);
+            $test_stylist->save();
+
+            $name2 = "Rick Sanchez";
+            $phone2 = "971-301-2344";
+            $email2 = "rickandmorty100years@rickandmortyforever.forever";
+            $stylist_id = $test_stylist->getId();
+            $test_client = new Client($name2, $phone2, $email2, $stylist_id);
+            $test_client->save();
+
+            $name3 = "Morty Smith";
+            $phone3 = "029-423-0918";
+            $email3 = "ohjeez@rick.com";
+            $stylist_id = $test_stylist->getId();
+            $test_client2 = new Client($name2, $phone2, $email2, $stylist_id);
+            $test_client2->save();
+
+            $result = $test_stylist->getClients();
+
+            $this->assertEquals([$test_client, $test_client2], $result);
         }
     }
 ?>
