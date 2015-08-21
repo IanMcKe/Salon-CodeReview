@@ -76,7 +76,8 @@
     });
 
 
-    //Started to try and make a prototype "Assign to me" feature.  Got lazy 
+    //Started to try and make a prototype "Assign to me" feature.  Got lazy and stopped
+    //In the future it would be better to make a line in the sql database that is Unassigned instead of trying to map all of the id's to zero.  
 
     // $app->get("/stylist/{id}/assign", function($id) use ($app){
     //     $stylist = Stylist::find($id);

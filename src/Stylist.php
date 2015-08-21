@@ -34,6 +34,26 @@
             return $this->id;
         }
 
+        function setName($new_name)
+        {
+            $this->name = $new_name;
+        }
+
+        function setPhone($new_phone)
+        {
+            $this->phone = $new_phone;
+        }
+
+        function setEmail($new_email)
+        {
+            $this->email = $new_email;
+        }
+
+        function setId($new_id)
+        {
+            $this->id = $new_id;
+        }
+
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO stylists (name, phone, email) VALUES ('{$this->getName()}', '{$this->getPhone()}', '{$this->getEmail()}');");

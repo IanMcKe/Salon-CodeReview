@@ -42,6 +42,31 @@
             return $this->id;
         }
 
+        function setName($new_name)
+        {
+            $this->name = $new_name;
+        }
+
+        function setPhone($new_phone)
+        {
+            $this->phone = $new_phone;
+        }
+
+        function setEmail($new_email)
+        {
+            $this->email = $new_email;
+        }
+
+        function setStylistId($new_stylist_id)
+        {
+            $this->stylist_id = $new_stylist_id;
+        }
+
+        function setId($new_id)
+        {
+            $this->id = $new_id;
+        }
+
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO clients (name, phone, email, stylist_id) VALUES ('{$this->getName()}', '{$this->getPhone()}', '{$this->getEmail()}', {$this->getStylistId()});");
