@@ -22,7 +22,7 @@ $ composer install
 ```console
 $ php -S localhost:8000
 ```
-* Unzip **hair_salon.sql.zip** and import it to your local server.
+* Unzip **hair_salon.sql.zip** and **hair_salon_test.sql.zip** and import them to your local server.
 * Navigate your browser to **localhost:8000**
 * To run tests using PHPUnit, create a copy of the database called **hair_salon_test**
 
