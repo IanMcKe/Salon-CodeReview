@@ -68,8 +68,8 @@
 
         function updateStylistId($new_stylist_id)
         {
-            $GLOBALS['DB']->exec("UPDATE clients SET email = '{$new_stylist_id}' WHERE id={$this->getId()};");
-            $this->email = $new_stylist_id;
+            $GLOBALS['DB']->exec("UPDATE clients SET stylist_id = {$new_stylist_id} WHERE id={$this->getId()};");
+            $this->stylist_id = $new_stylist_id;
         }
 
         function update($new_name, $new_phone, $new_email, $new_stylist_id)
